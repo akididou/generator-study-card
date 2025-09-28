@@ -26,7 +26,10 @@ export class StudentCardComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     if (this.studentData && this.signatureCanvas) {
-      this.generateSignature();
+      // Ajouter un petit délai pour s'assurer que le canvas est complètement rendu
+      setTimeout(() => {
+        this.generateSignature();
+      }, 100);
     }
   }
 
@@ -35,9 +38,15 @@ export class StudentCardComponent implements AfterViewInit, OnDestroy {
   }
 
   private generateSignature(): void {
-    if (!this.signatureCanvas?.nativeElement || !this.studentData) return;
+    if (!this.signatureCanvas?.nativeElement || !this.studentData) {
+      console.warn('Canvas ou données étudiant manquants');
+      return;
+    }
 
     const canvas = this.signatureCanvas.nativeElement;
+    console.log('Génération de signature pour:', this.studentData.prenom, this.studentData.nom);
+    console.log('Type de signature:', this.studentData.signatureType);
+    console.log('Canvas dimensions:', canvas.width, 'x', canvas.height);
 
     if (this.studentData.signatureType === 'manual' && this.studentData.manualSignature) {
       // Afficher la signature manuelle
