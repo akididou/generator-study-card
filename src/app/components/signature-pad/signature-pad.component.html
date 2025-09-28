@@ -1,0 +1,77 @@
+<div class="signature-pad-container">
+  <div class="signature-header">
+    <h4>Dessinez votre signature</h4>
+    <p class="signature-instructions">
+      Utilisez votre souris ou votre doigt pour dessiner votre signature dans le cadre ci-dessous
+    </p>
+  </div>
+
+  <div class="signature-canvas-container">
+    <canvas
+      #signaturePad
+      class="signature-canvas"
+      width="400"
+      height="120"
+      [attr.aria-label]="'Zone de signature'"
+    ></canvas>
+
+    <div class="signature-overlay" *ngIf="isSignatureEmpty()">
+      <span class="signature-placeholder">Dessinez votre signature ici</span>
+    </div>
+  </div>
+
+  <div class="signature-controls">
+    <div class="signature-tools">
+      <div class="tool-group">
+        <label for="lineWidth">Épaisseur :</label>
+        <input
+          type="range"
+          id="lineWidth"
+          min="1"
+          max="5"
+          value="2"
+          (input)="setLineWidth(+$any($event.target).value)"
+          class="line-width-slider"
+        >
+      </div>
+
+      <div class="tool-group">
+        <label for="strokeColor">Couleur :</label>
+        <select
+          id="strokeColor"
+          (change)="setStrokeColor($any($event.target).value)"
+          class="color-select"
+        >
+          <option value="#1a237e">Bleu foncé</option>
+          <option value="#000000">Noir</option>
+          <option value="#0d47a1">Bleu</option>
+          <option value="#1565c0">Bleu clair</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="signature-actions">
+      <button
+        type="button"
+        (click)="clear()"
+        class="btn btn-clear"
+        [attr.aria-label]="'Effacer la signature'"
+      >
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+        </svg>
+        Effacer
+      </button>
+    </div>
+  </div>
+
+  <div class="signature-tips">
+    <h5>💡 Conseils pour une belle signature :</h5>
+    <ul>
+      <li>Dessinez lentement et avec fluidité</li>
+      <li>Utilisez un trait continu autant que possible</li>
+      <li>N'hésitez pas à effacer et recommencer</li>
+      <li>Sur mobile, utilisez votre doigt ou un stylet</li>
+    </ul>
+  </div>
+</div>

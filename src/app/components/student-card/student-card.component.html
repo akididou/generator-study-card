@@ -1,0 +1,119 @@
+<div class="card-container" *ngIf="studentData">
+  <div class="card-preview">
+    <div #studentCard class="student-card" id="student-card">
+      <!-- En-tête de la carte -->
+      <div class="card-header">
+        <h3>Carte d'étudiant<br>- métiers</h3>
+      </div>
+
+      <!-- Contenu principal de la carte -->
+      <div class="card-content">
+        <!-- Section informations -->
+        <div class="info-section">
+          <div class="info-row">
+            <span class="label">Nom :</span>
+            <span class="value">{{ studentData.nom }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Prénom :</span>
+            <span class="value">{{ studentData.prenom }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Né(e) le :</span>
+            <span class="value">{{ formatDate(studentData.dateNaissance) }}</span>
+          </div>
+
+          <div class="info-row">
+            <span class="label">Validité du :</span>
+            <span class="value">{{ studentData.validite }}</span>
+          </div>
+
+          <!-- Section signature -->
+          <div class="signature-section">
+            <span class="signature-label">Signature du titulaire :</span>
+            <canvas
+              #signatureCanvas
+              class="signature-canvas"
+              width="200"
+              height="60">
+            </canvas>
+          </div>
+        </div>
+
+        <!-- Section photo -->
+        <div class="photo-section">
+          <img [src]="studentData.photo" alt="Photo de l'étudiant" class="student-photo">
+        </div>
+
+        <!-- Section logo officiel -->
+        <div class="logo-section">
+          <div class="french-logo">
+            <!-- Drapeau français -->
+            <div class="flag">
+              <div class="flag-blue"></div>
+              <div class="flag-white"></div>
+              <div class="flag-red"></div>
+            </div>
+
+            <!-- Texte officiel -->
+            <div class="logo-text">
+              <div class="motto">Liberté • Égalité • Fraternité</div>
+              <div class="republic">RÉPUBLIQUE FRANÇAISE</div>
+              <div class="ministry">
+                MINISTÈRE<br>
+                DU TRAVAIL, DE L'EMPLOI,<br>
+                DE LA FORMATION<br>
+                PROFESSIONNELLE<br>
+                ET DU DIALOGUE SOCIAL
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pied de carte -->
+      <div class="card-footer">
+        <p>Cette carte est strictement personnelle</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions d'export -->
+  <div class="export-actions">
+    <h3>Exporter la carte</h3>
+
+    <div class="action-buttons">
+      <button
+        (click)="exportToPdf()"
+        [disabled]="isExporting"
+        class="btn btn-primary"
+      >
+        <span *ngIf="isExporting" class="loading-spinner"></span>
+        {{ isExporting ? 'Export en cours...' : 'Exporter en PDF' }}
+      </button>
+
+      <button
+        (click)="exportToPng()"
+        [disabled]="isExporting"
+        class="btn btn-secondary"
+      >
+        Exporter en PNG
+      </button>
+
+      <button
+        (click)="regenerateSignature()"
+        [disabled]="isExporting"
+        class="btn btn-outline"
+      >
+        Régénérer signature
+      </button>
+    </div>
+
+    <!-- Message d'erreur -->
+    <div class="error-message" *ngIf="exportError">
+      {{ exportError }}
+    </div>
+  </div>
+</div>

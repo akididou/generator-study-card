@@ -1,0 +1,28 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>{{ title() }}</h1>
+    <p class="subtitle">Créez facilement votre carte étudiante officielle</p>
+  </header>
+
+  <main class="main-content">
+    <!-- Formulaire de saisie -->
+    <section class="form-section" *ngIf="!studentCard">
+      <app-student-form (studentSubmitted)="onStudentSubmitted($event)"></app-student-form>
+    </section>
+
+    <!-- Affichage de la carte -->
+    <section class="card-section" *ngIf="studentCard">
+      <app-student-card [studentData]="studentCard"></app-student-card>
+
+      <div class="new-card-section">
+        <button (click)="onNewCard()" class="btn btn-new-card">
+          Créer une nouvelle carte
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>&copy; 2025 Générateur de Carte Étudiante - Application Angular sécurisée</p>
+  </footer>
+</div>
